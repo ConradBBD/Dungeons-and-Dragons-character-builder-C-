@@ -14,12 +14,48 @@ public class Background {
     private string playerName;
     private int age;
     private int height;
-    private string weight;
+    private int weight;
     private string eyes;
     private string skin;
     private string hair;
     private string characterBackstory;
 
+    public Background(
+        string newPersonalityTraits,
+        string newIdeals,
+        string newBonds,
+        string newFlaws,
+        string newCharacterBackground,
+        string newCharacterClass,
+        int newLevel,
+        string newAlignment,
+        string newRace,
+        string newPlayerName,
+        int newAge,
+        int newHeight,
+        string newEyes,
+        string newSkin,
+        string newHair,
+        string newCharacterBackstory
+    ) {
+
+        personalityTraits = newPersonalityTraits;
+        ideals = newIdeals;
+        bonds = newBonds;
+        flaws = newFlaws;
+        characterBackground = newCharacterBackground;
+        characterClass = newCharacterClass;
+        level = newLevel;
+        alignment = newAlignment;
+        race = newRace;
+        playerName = newPlayerName;
+        age = newAge;
+        height = newHeight;
+        eyes = newEyes;
+        skin = newSkin;
+        hair = newHair;
+        characterBackstory = newCharacterBackstory;
+    }
     public string getPersonalityTraits (){
 
         return personalityTraits;
