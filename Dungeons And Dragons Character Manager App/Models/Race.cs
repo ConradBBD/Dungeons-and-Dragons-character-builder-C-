@@ -15,10 +15,10 @@
         public string Size { get; set; }
         public int Speed { get; set; }
 
-        public ICollection<Language> Languages { get; set; }
+        //public ICollection<Language> Languages { get; set; }
         public ICollection<AbilityScoreIncrease> AbilityScoreIncreases { get; set; }
 
-        public ICollection<string> SpecialProperties { get; set; }
+        // public ICollection<string> SpecialProperties { get; set; }
     
     }
 }

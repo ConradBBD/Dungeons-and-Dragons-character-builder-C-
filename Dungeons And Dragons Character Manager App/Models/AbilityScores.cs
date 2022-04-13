@@ -2,6 +2,7 @@
 {
     public class AbilityScore
     {
+        public int ID { get; set; }
         public int CharacterID { get; set; }
         public int AbilityID { get; set; }
         public Character Character { get; set; }

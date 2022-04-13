@@ -3,6 +3,7 @@
 
     public class AbilityScoreIncrease
     {
+        public int ID { get; set; }
         public int RaceID { get; set; }
         public int AbilityID { get; set; }
         public Race Race { get; set; }
