@@ -4,7 +4,7 @@ public class SpellSlot{
     public bool usedUp { get; set; }
     public int level { get; }
 
-    SpellSlot(int level){
+    public SpellSlot(int level){
         this.level = level;
         this.usedUp = false;
     }

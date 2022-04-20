@@ -9,32 +9,28 @@ namespace Dungeons_And_Dragons_Character_Manager_App.Models
         public string SubClass {get; set;}
         public ICollection<string> SubclassFeatures {get; set;}
 
-        // protected ICollection<T> ItemProficiencies {get; set;}
-        protected ICollection<string> WeaponProficiencies {get; set;}
-        protected ICollection<string> ToolProficiencies {get; set;}
-        protected ICollection<string> ArmourProficiencies {get; set;}
-        protected ICollection<string> SkillProficiencies {get; set;}
-        protected ICollection<string> SavingProficiencies {get; set;}
-        protected ICollection<string> StartingEquipment {get; set;}
-        protected List<int> AsiOnLevelUp {get; set;}
+        public ICollection<Item> ItemProficiencies {get; set;}
+        public ICollection<Skill> SkillProficiencies {get; set;}
+        public ICollection<Ability> SavingProficiencies {get; set;}
+        public ICollection<Item> StartingEquipment {get; set;}
+        public List<int> AsiOnLevelUp {get; set;}
 
         public abstract void ShortRest();
         public abstract void LongRest();
-        public abstract void LevelUp(string AbilityToIncrease = "");
+        public abstract void LevelUp();
+
     }
 
     public class Fighter: DndClass
     {
-        private string FightingStyle1 {get; set;}
-        private string FightingStyle2 {get; set;}
-        private int AttackCount {get; set;}
-        private bool SecondWindUse {get; set;}
-        private int ActionSurgeTotal {get; set;}
-        private int ActionSurgeCount {get; set;}
-        private int IndomnitableCharges {get; set;}
-        private int IndomnitableTotal {get; set;}
-
-        // implementation of methods might need to be in a controller instead of model?
+        public string FightingStyle1 {get; set;}
+        public string FightingStyle2 {get; set;}
+        public int AttackCount {get; set;}
+        public bool SecondWindUse {get; set;}
+        public int ActionSurgeTotal {get; set;}
+        public int ActionSurgeCount {get; set;}
+        public int IndomnitableCharges {get; set;}
+        public int IndomnitableTotal {get; set;}
 
         public Fighter(
             int Level,
@@ -92,7 +88,8 @@ namespace Dungeons_And_Dragons_Character_Manager_App.Models
             this.IndomnitableCharges = 0;
         }
 
-        public override void LevelUp(string AbilityToIncrease = "")
+        public override void LevelUp()
+
         {
             this.Level++;
             switch(this.Level)
@@ -108,26 +105,14 @@ namespace Dungeons_And_Dragons_Character_Manager_App.Models
                     this.SubclassFeatures.Add("Improved Critical");
                     break;
                 }
-                case 4:
-                {
-                    break;
-                }
                 case 5:
                 {
                     this.AttackCount = 2;
                     break;
                 }
-                case 6:
-                {
-                    break;
-                }
                 case 7:
                 {
                     this.SubclassFeatures.Add("Remarkable Athlete");
-                    break;
-                }
-                case 8:
-                {
                     break;
                 }
                 case 9:
@@ -145,26 +130,14 @@ namespace Dungeons_And_Dragons_Character_Manager_App.Models
                     this.AttackCount = 3;
                     break;
                 }
-                case 12:
-                {
-                    break;
-                }
                 case 13:
                 {
                     this.IndomnitableTotal = 2;
                     break;
                 }
-                case 14:
-                {
-                    break;
-                }
                 case 15:
                 {
                     this.SubclassFeatures.Add("Superior Critical");
-                    break;
-                }
-                case 16:
-                {
                     break;
                 }
                 case 17:
@@ -176,10 +149,6 @@ namespace Dungeons_And_Dragons_Character_Manager_App.Models
                 case 18:
                 {
                     this.SubclassFeatures.Add("Survivor");
-                    break;
-                }
-                case 19:
-                {
                     break;
                 }
                 case 20:
@@ -199,28 +168,24 @@ namespace Dungeons_And_Dragons_Character_Manager_App.Models
             else
             {
                 Console.Write("Second Wind already used.\n");
-
             }
-            // else throw message/exception that it was already used
         }
 
     }
-
-    // Will do wizard once the spells are done
     
     public class Wizard: DndClass
     {
-        private ICollection<Spell> SpellList {get; set;}
-        private ICollection<SpellSlot> SpellSlots {get; set;}
-        private AbilityScore SpellCastingAbility;
-        private int SpellSaveDC {get; set;}
-        private int SpellAttack {get; set;}
-        private string RitualCasting {get; set;}
-        private string SpellCastingFocus {get; set;}
-        private int ArcaneRecoveryTotal {get; set;}
-        private bool ArcaneRecoveryUsed {get; set;}
-        private ICollection<Spell> SpellMastery {get; set;}
-        private ICollection<Spell> SignatureSpells {get; set;}
+        public List<Spell> SpellList {get; set;}
+        public List<SpellSlot> SpellSlots {get; set;}
+        public AbilityScore SpellCastingAbility { get; set; }
+        public int SpellSaveDC {get; set;}
+        public int SpellAttack {get; set;}
+        public string RitualCasting {get; set;}
+        public string SpellCastingFocus {get; set;}
+        public int ArcaneRecoveryTotal {get; set;}
+        public bool ArcaneRecoveryUsed {get; set;}
+        public List<Spell>? SpellMastery {get; set;}
+        public List<Spell>? SignatureSpells {get; set;}
 
         public Wizard(
             int Level,
@@ -232,15 +197,15 @@ namespace Dungeons_And_Dragons_Character_Manager_App.Models
             ICollection<string> SkillProficiencies,
             ICollection<string> SavingProficiencies,
             ICollection<string> StartingEquipment,
-            ICollection<Spell> SpellList,
-            ICollection<SpellSlot> SpellSlots,
+            List<Spell> SpellList,
+            List<SpellSlot> SpellSlots,
             AbilityScore SpellCastingAbility,
             int SpellSaveDC,
             int SpellAttack,
             string SpellCastingFocus,
             int ArcaneRecoveryTotal,
-            ICollection<Spell> SpellMastery,
-            ICollection<Spell> SignatureSpells
+            List<Spell>? SpellMastery,
+            List<Spell>? SignatureSpells
         ) {
             this.Level = Level;
             this.SubClass = SubClass;
@@ -271,32 +236,10 @@ namespace Dungeons_And_Dragons_Character_Manager_App.Models
 
         public void ResetSpellSlots()
         {
-            for (int i = 0; i < this.SpellSlots.Count; i++)
-            {
-                this.SpellSlots[i].resetSlot();
+            foreach (var slot in this.SpellSlots)
+            { 
+                slot.resetSlot();
             }
-        }
-
-        public bool ArcaneRecoveryHigh()
-        {
-            if (!ArcaneRecoveryUsed)
-            {
-                int HalfLevel = (this.Level/2) + (this.Level % 2);
-                int count = this.SpellSlots.Count;
-                while (HalfLevel > 0)
-                {
-                    if ((!this.SpellSlots[count].usedUp) & (this.SpellSlots[count].level <= HalfLevel))
-                    {
-                        this.SpellSlots.resetSlot();
-                    }
-                    count--;
-                }
-            }
-            else 
-            {
-                Console.Write("Arcane Recovery already used.");
-            }
-            return true;
         }
 
         public bool ArcaneRecoveryLow()
@@ -309,7 +252,7 @@ namespace Dungeons_And_Dragons_Character_Manager_App.Models
                 {
                     if ((!this.SpellSlots[count].usedUp) & (this.SpellSlots[count].level <= HalfLevel))
                     {
-                        this.SpellSlots.resetSlot();
+                        this.SpellSlots[count].resetSlot();
                     }
                     count++;
                 }
@@ -332,7 +275,7 @@ namespace Dungeons_And_Dragons_Character_Manager_App.Models
             this.ResetSpellSlots();
         }
 
-        public override void LevelUp(string AbilityToIncrease = "")
+        public override void LevelUp()
         {
             this.Level++;
             switch(this.Level)
@@ -460,7 +403,5 @@ namespace Dungeons_And_Dragons_Character_Manager_App.Models
                 }
             }
         }
-
     }
-
 }

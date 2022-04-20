@@ -1,91 +1,38 @@
-﻿namespace Dungeons_And_Dragons_Character_Manager_App.Models
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace Dungeons_And_Dragons_Character_Manager_App.Models
 {
     public class Character 
     {
         public int ID {get; set;}
         public string Name {get; set;}
-        public string PlayerName {get; set;}
-        public Race Race {get; set;}
-        public DndClass CharacterClass {get; set;}
-        public ICollection<AbilityScore> AbilityScores {get; set;}
-        public Background Background {get; set;}
+        public Race? Race {get; set;}
+        public DndClass? CharacterClass {get; set;}
+        public ICollection<AbilityScore>? AbilityScores {get; set;}
+        public Background? Background { get; set; }
         public int CurrentHitPoints {get; set;}
         public int TemporaryHitPoints {get; set;}
         public int MaxHitPoints {get; set;}
-        public ICollection<Item> Equipment {get; set;}
+        public ICollection<Item>? Equipment {get; set;}
         public int ProficiencyBonus {get; set;} 
         public int ArmourClass {get; set;} 
-        public ICollection<Skills> Skills {get; set;} 
-        public ICollection<Item> ItemProficiencies {get; set;} 
-        public ICollection<Skills> SkillProficiencies {get; set;} 
-        public ICollection<AbilityScore> SavingProficiencies {get; set;} 
-        public int ExperiencePoints {get; set;} 
+        public ICollection<Skill>? Skills {get; set;} 
+        public ICollection<Item>? ItemProficiencies {get; set;} 
+        public ICollection<Skill>? SkillProficiencies {get; set;} 
+        public ICollection<Ability>? SavingProficiencies {get; set;}
         public int CurrentHitDice {get; set;} 
         public int TotalHitDice {get; set;} 
-        public ICollection<Language> Languages {get; set;} 
+        public ICollection<string>? Languages {get; set;} 
         public int NumGold {get; set;} 
         public int NumSilver {get; set;} 
         public int NumCopper {get; set;} 
         public int NumPlatinum {get; set;} 
         public int NumElectrum {get; set;}
-        public List<int> AsiOnLevel {get; set;}
+        public List<int>? AsiOnLevel {get; set;}
 
-        public Character(
-            int ID,
-            string Name,
-            string PlayerName,
-            Race Race,
-            DndClass CharacterClass,
-            ICollection<AbilityScore> AbilityScores,
-            Background Background,
-            int CurrentHitPoints,
-            int TemporaryHitPoints,
-            int MaxHitPoints,
-            ICollection<Item> Equipment,
-            int ProficiencyBonus,
-            int ArmourClass,
-            ICollection<Skills> Skills,
-            ICollection<Item> ItemProficiencies,
-            ICollection<Skills> SkillProficiencies,
-            ICollection<AbilityScore> SavingProficiencies,
-            int ExperiencePoints,
-            int CurrentHitDice,
-            int TotalHitDice,
-            ICollection<Language> Languages,
-            int NumGold,
-            int NumSilver,
-            int NumCopper,
-            int NumPlatinum,
-            int NumElectrum
-        )
+        public Character(string name)
         {
-            this.ID = ID;
-            this.Name = Name;
-            this.PlayerName = PlayerName;
-            this.Race = Race;
-            this.CharacterClass = CharacterClass;
-            this.AbilityScores = AbilityScores;
-            this.Background = Background;
-            this.CurrentHitPoints = CurrentHitPoints;
-            this.TemporaryHitPoints = TemporaryHitPoints;
-            this.MaxHitPoints = MaxHitPoints;
-            this.Equipment = Equipment;
-            this.ProficiencyBonus = ProficiencyBonus;
-            this.ArmourClass = ArmourClass;
-            this.Skills = Skills;
-            this.ItemProficiencies = ItemProficiencies;
-            this.SkillProficiencies = SkillProficiencies;
-            this.SavingProficiencies = SavingProficiencies;
-            this.ExperiencePoints = ExperiencePoints;
-            this.CurrentHitDice = CurrentHitDice;
-            this.TotalHitDice = TotalHitDice;
-            this.Languages = Languages;
-            this.NumGold = NumGold;
-            this.NumSilver = NumSilver;
-            this.NumCopper = NumCopper;
-            this.NumElectrum = NumElectrum;
-            this.NumPlatinum = NumPlatinum;
-            this.AsiOnLevel = this.CharacterClass.AsiOnLevelUp;
+            Name = name;
         }
 
         public void ShortRest()
@@ -98,19 +45,85 @@
             this.CharacterClass.LongRest();
         }
 
-        public void LevelUp(string AbilityToIncrease)
+        public void LevelUp(Ability ability)
         {
             if (this.AsiOnLevel.Contains(this.CharacterClass.Level))
             {
-                for (int i = 0; i < 6; i++)
+                AbilityScore toUpdate = this.AbilityScores.First(score => score.Ability.Equals(ability));
+
+                toUpdate.Score++;
+                if (toUpdate.Score % 2 == 0)
                 {
-                    if (this.AbilityScores[i].Ability.Name.Equals(AbilityToIncrease))
-                    {
-                        this.AbilityScores[i].Score++;
-                    }
+                    toUpdate.Modifier++;
                 }
+                
             }
             this.CharacterClass.LevelUp();
+        }
+        
+
+        public int AbilityCheck(Ability ability)
+        {
+            Random random = new Random();
+            int total;
+            int rollResult = random.Next(1, 21);
+
+            AbilityScore abilityScore = AbilityScores.First(score => score.Ability.Equals(ability));            
+            int modifier = abilityScore.Modifier;
+            
+            total = modifier + rollResult;
+            return total;
+            
+        }
+
+        public int SkillCheck(Skill skill)
+        {
+            int total = AbilityCheck(skill.parentAbility);
+
+            if (SkillProficiencies.Any(proficiency => proficiency.Equals(skill)))
+                total += ProficiencyBonus;
+
+            return total;
+            
+        }
+
+        public int SavingThrow(Ability ability)
+        {
+            int total = AbilityCheck(ability);
+
+            if (SavingProficiencies.Any(proficiency => proficiency.Equals(ability)))
+                total += ProficiencyBonus;
+
+            return total;
+        }
+
+        public string CastSpell(Spell spell, int desiredLevel)
+        {
+            Wizard wizard = (Wizard)this.CharacterClass;
+            var spellcast = spell.castSpell(wizard.SpellSlots, desiredLevel);
+            wizard.SpellSlots = spellcast.Item1;
+            return spellcast.Item3;
+        }
+
+        public string WeaponAttack(Weapon weapon, Ability ability)
+        {
+            int attack = AbilityCheck(ability);
+
+            if (ItemProficiencies.Any(proficiency => proficiency.Equals(weapon)))
+            {
+                attack += ProficiencyBonus;
+            }
+            
+            Random random = new Random();
+            int damage = 0;
+            foreach (var dice in weapon.DamageDice)
+            {
+                damage += random.Next(1, dice);
+            }
+
+            string weaponAttack = $"Weapon: {weapon.Name} / Attack roll: {attack} / Damage roll: {damage}";
+
+            return weaponAttack;
         }
     }
 }
