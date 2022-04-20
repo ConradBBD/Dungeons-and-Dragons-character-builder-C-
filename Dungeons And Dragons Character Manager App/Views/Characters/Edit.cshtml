@@ -1,0 +1,106 @@
+﻿@model Dungeons_And_Dragons_Character_Manager_App.Models.Character
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@addTagHelper *, Dungeons_And_Dragons_Character_Manager_App
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Character</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="ID" />
+            <div class="form-group">
+                <label asp-for="name" class="control-label"></label>
+                <input asp-for="name" class="form-control" />
+                <span asp-validation-for="name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="playerName" class="control-label"></label>
+                <input asp-for="playerName" class="form-control" />
+                <span asp-validation-for="playerName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="currentHitPoints" class="control-label"></label>
+                <input asp-for="currentHitPoints" class="form-control" />
+                <span asp-validation-for="currentHitPoints" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="temporaryHitPoints" class="control-label"></label>
+                <input asp-for="temporaryHitPoints" class="form-control" />
+                <span asp-validation-for="temporaryHitPoints" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="maxHitPoints" class="control-label"></label>
+                <input asp-for="maxHitPoints" class="form-control" />
+                <span asp-validation-for="maxHitPoints" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="proficiencyBonus" class="control-label"></label>
+                <input asp-for="proficiencyBonus" class="form-control" />
+                <span asp-validation-for="proficiencyBonus" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="armourClass" class="control-label"></label>
+                <input asp-for="armourClass" class="form-control" />
+                <span asp-validation-for="armourClass" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="experiencePoints" class="control-label"></label>
+                <input asp-for="experiencePoints" class="form-control" />
+                <span asp-validation-for="experiencePoints" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="currentHitDice" class="control-label"></label>
+                <input asp-for="currentHitDice" class="form-control" />
+                <span asp-validation-for="currentHitDice" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="totalHitDice" class="control-label"></label>
+                <input asp-for="totalHitDice" class="form-control" />
+                <span asp-validation-for="totalHitDice" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="numGold" class="control-label"></label>
+                <input asp-for="numGold" class="form-control" />
+                <span asp-validation-for="numGold" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="numSilver" class="control-label"></label>
+                <input asp-for="numSilver" class="form-control" />
+                <span asp-validation-for="numSilver" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="numCopper" class="control-label"></label>
+                <input asp-for="numCopper" class="form-control" />
+                <span asp-validation-for="numCopper" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="numPlatinum" class="control-label"></label>
+                <input asp-for="numPlatinum" class="form-control" />
+                <span asp-validation-for="numPlatinum" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="numElectrum" class="control-label"></label>
+                <input asp-for="numElectrum" class="form-control" />
+                <span asp-validation-for="numElectrum" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
