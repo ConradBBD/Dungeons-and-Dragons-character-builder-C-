@@ -19,6 +19,8 @@ public class Tool : Item{
         this.AbilityScore = ability;
     }
 
+    public Tool() { }
+
     public bool useInstance(){
         if (this.Count == 0)
             return false;

@@ -28,6 +28,8 @@ public class Armor : Item{
         this.Strength = strength;
     }
 
+    public Armor() { }
+
     public override string ToString(){
         return String.Format(
             "Name: {0} / Cost: {1}gp / Armor Class: {2} / Armor Type: {3} /\n" +

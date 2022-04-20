@@ -1,21 +1,22 @@
 using System;
 
-public class Background {
+public class Background
+{
 
-    private string personalityTraits {get; set;}
-    private string ideals {get; set;}
-    private string bonds {get; set;}
-    private string flaws {get; set;}
-    private string characterBackground {get; set;}
-    private string alignment {get; set;}
-    private string race {get; set;}
-    private int age {get; set;}
-    private int height {get; set;}
-    private int weight {get; set;}
-    private string eyes {get; set;}
-    private string skin {get; set;}
-    private string hair {get; set;}
-    private string characterBackstory {get; set;}
+    private string personalityTraits { get; set; }
+    private string ideals { get; set; }
+    private string bonds { get; set; }
+    private string flaws { get; set; }
+    private string characterBackground { get; set; }
+    private string alignment { get; set; }
+    private string race { get; set; }
+    private int age { get; set; }
+    private int height { get; set; }
+    private int weight { get; set; }
+    private string eyes { get; set; }
+    private string skin { get; set; }
+    private string hair { get; set; }
+    private string characterBackstory { get; set; }
 
     public Background(
         string newPersonalityTraits,
@@ -35,8 +36,9 @@ public class Background {
         string newSkin,
         string newHair,
         string newCharacterBackstory
-    ) {
-
+    )
+    {
+        /*
         personalityTraits = newPersonalityTraits;
         ideals = newIdeals;
         bonds = newBonds;
@@ -54,5 +56,6 @@ public class Background {
         skin = newSkin;
         hair = newHair;
         characterBackstory = newCharacterBackstory;
+        */
     }
-    
+}

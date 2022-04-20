@@ -1,4 +1,6 @@
 using System;
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace Dungeons_And_Dragons_Character_Manager_App.Models
 {
     public abstract class DndClass
@@ -7,11 +9,15 @@ namespace Dungeons_And_Dragons_Character_Manager_App.Models
         public int Level {get; set;}
         public int HitDiceType {get; set;}
         public string? SubClass {get; set;}
+        [NotMapped]
         public List<string>? SubclassFeatures {get; set;}
+        [NotMapped]
         public List<Item>? ItemProficiencies {get; set;}
         public List<Skill>? SkillProficiencies {get; set;}
         public List<Ability>? SavingProficiencies {get; set;}
+
         public List<Item>? StartingEquipment {get; set;}
+        [NotMapped]
         public List<int>? AsiOnLevelUp {get; set;}
 
         public abstract void ShortRest();
@@ -22,8 +28,8 @@ namespace Dungeons_And_Dragons_Character_Manager_App.Models
 
     public class Fighter: DndClass
     {
-        public string FightingStyle1 {get; set;}
-        public string FightingStyle2 {get; set;}
+        public string? FightingStyle1 {get; set;}
+        public string? FightingStyle2 {get; set;}
         public int AttackCount {get; set;}
         public bool SecondWindUse {get; set;}
         public int ActionSurgeTotal {get; set;}
@@ -32,22 +38,22 @@ namespace Dungeons_And_Dragons_Character_Manager_App.Models
         public int IndomnitableTotal {get; set;}
 
         public Fighter(
-            List<Item> ItemProficiencies,
-            List<Skill> SkillProficiencies,
-            List<Ability> SavingProficiencies,
-            List<Item> StartingEquipment,
-            string FightingStyle1
+            List<Item> itemProficiencies,
+            List<Skill> skillProficiencies,
+            List<Ability> savingProficiencies,
+            List<Item> startingEquipment,
+            string fightingStyle1
         ) {
             this.Level = 1;
             this.HitDiceType = 10;
-            this.ItemProficiencies = ItemProficiencies;
-            this.SkillProficiencies = SkillProficiencies;
-            this.SavingProficiencies = SavingProficiencies;
-            this.StartingEquipment = StartingEquipment;
-            this.FightingStyle1 = FightingStyle1;
+            this.ItemProficiencies = itemProficiencies;
+            this.SkillProficiencies = skillProficiencies;
+            this.SavingProficiencies = savingProficiencies;
+            this.StartingEquipment = startingEquipment;
+            this.FightingStyle1 = fightingStyle1;
             this.FightingStyle2 = "";
             this.SecondWindUse = false;
-            this.ActionSurgeCount = ActionSurgeCount;
+            this.ActionSurgeCount = 1;
             this.ActionSurgeTotal = 0;
             this.SubClass = "";
             this.SubclassFeatures = new List<string>();
@@ -55,6 +61,11 @@ namespace Dungeons_And_Dragons_Character_Manager_App.Models
             this.IndomnitableCharges = 0;
             this.IndomnitableTotal = 0;
             this.AsiOnLevelUp = new List<int>() { 4, 6, 8, 12, 14, 16, 19 };
+        }
+
+        public Fighter()
+        {
+            
         }
 
         public override void ShortRest()
@@ -205,6 +216,8 @@ namespace Dungeons_And_Dragons_Character_Manager_App.Models
             this.SignatureSpells = SignatureSpells;
             this.AsiOnLevelUp = new List<int>() { 4, 8, 12, 16, 19 };
         }
+
+        public Wizard() { }
 
         public void ResetSpellSlots()
         {

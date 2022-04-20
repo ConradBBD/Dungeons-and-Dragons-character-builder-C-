@@ -2,38 +2,45 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Dungeons_And_Dragons_Character_Manager_App.Models
 {
-    public class Character 
+    public class Character
     {
-        public int ID {get; set;}
-        public string Name {get; set;}
-        public Race? Race {get; set;}
-        public DndClass? CharacterClass {get; set;}
-        public ICollection<AbilityScore>? AbilityScores {get; set;}
-        public Background? Background { get; set; }
-        public int CurrentHitPoints {get; set;}
-        public int TemporaryHitPoints {get; set;}
-        public int MaxHitPoints {get; set;}
-        public ICollection<Item>? Equipment {get; set;}
-        public int ProficiencyBonus {get; set;} 
-        public int ArmourClass {get; set;} 
-        public ICollection<Skill>? Skills {get; set;} 
-        public ICollection<Item>? ItemProficiencies {get; set;} 
-        public ICollection<Skill>? SkillProficiencies {get; set;} 
-        public ICollection<Ability>? SavingProficiencies {get; set;}
-        public int CurrentHitDice {get; set;} 
-        public int TotalHitDice {get; set;} 
-        public ICollection<string>? Languages {get; set;} 
-        public int NumGold {get; set;} 
-        public int NumSilver {get; set;} 
-        public int NumCopper {get; set;} 
-        public int NumPlatinum {get; set;} 
-        public int NumElectrum {get; set;}
-        public List<int>? AsiOnLevel {get; set;}
+        public int ID { get; set; }
+        public string name { get; set; }
+        public Race? Race { get; set; }
+        public DndClass? CharacterClass { get; set; }
+        public List<AbilityScore>? AbilityScores { get; set; }
+        //public Background? Background { get; set; }
+        public int currentHitPoints { get; set; }
+        public int temporaryHitPoints { get; set; }
+        public int maxHitPoints { get; set; }
+        [NotMapped]
+        public List<Item>? Equipment { get; set; }
+        public int proficiencyBonus { get; set; }
+        public int armourClass { get; set; }
+        public List<Skill>? Skills { get; set; }
+        [NotMapped]
+        public List<Item>? ItemProficiencies { get; set; }
+        public List<Skill>? SkillProficiencies { get; set; }
+        public List<Ability>? SavingProficiencies { get; set; }
+        public int currentHitDice { get; set; }
+        public int totalHitDice { get; set; }
+        [NotMapped]
+        public List<string>? Languages { get; set; }
+        public int numGold { get; set; }
+        public int numSilver { get; set; }
+        public int numCopper { get; set; }
+        public int numPlatinum { get; set; }
+        public int numElectrum { get; set; }
+
+        [NotMapped]
+        public List<int>? AsiOnLevel { get; set; }
 
         public Character(string name)
         {
-            Name = name;
+            this.name = name;
         }
+
+        public Character() { }
 
         public void ShortRest()
         {
@@ -78,10 +85,10 @@ namespace Dungeons_And_Dragons_Character_Manager_App.Models
 
         public int SkillCheck(Skill skill)
         {
-            int total = AbilityCheck(skill.parentAbility);
+            int total = AbilityCheck(skill.ParentAbility);
 
             if (SkillProficiencies.Any(proficiency => proficiency.Equals(skill)))
-                total += ProficiencyBonus;
+                total += proficiencyBonus;
 
             return total;
             
@@ -92,7 +99,7 @@ namespace Dungeons_And_Dragons_Character_Manager_App.Models
             int total = AbilityCheck(ability);
 
             if (SavingProficiencies.Any(proficiency => proficiency.Equals(ability)))
-                total += ProficiencyBonus;
+                total += proficiencyBonus;
 
             return total;
         }
@@ -102,23 +109,23 @@ namespace Dungeons_And_Dragons_Character_Manager_App.Models
             Wizard wizard = (Wizard)this.CharacterClass;
             var spellcast = spell.castSpell(wizard.SpellSlots, desiredLevel);
             wizard.SpellSlots = spellcast.Item1;
-            return spellcast.Item3;
+            return spellcast.Item2;
         }
 
         public string WeaponAttack(Weapon weapon, Ability ability)
         {
             int attack = AbilityCheck(ability);
 
-            if (ItemProficiencies.Any(proficiency => proficiency.Equals(weapon)))
+            if (ItemProficiencies.Any(proficiency => ((Weapon)proficiency).Equals(weapon)))
             {
-                attack += ProficiencyBonus;
+                attack += proficiencyBonus;
             }
             
             Random random = new Random();
             int damage = 0;
             foreach (var dice in weapon.DamageDice)
             {
-                damage += random.Next(1, dice);
+                damage += random.Next(1, (int)dice);
             }
 
             string weaponAttack = $"Weapon: {weapon.Name} / Attack roll: {attack} / Damage roll: {damage}";
