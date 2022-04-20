@@ -2,34 +2,36 @@ namespace Dungeons_And_Dragons_Character_Manager_App.Models;
 
 public class Spell{
     public int Id { get; }
-    int Range { get; set; } = 0;
-    int Level { get; set; } = 0;
+    int Range { get; set; }
+    int Level { get; set; }
     string? HigherLevel { get; set; }
-    bool Ritual { get; set; } = false;
-    string Name { get; set; } = "Unnamed";
-    string School { get; set; } = "Illusion";
-    string MaterialComponent { get; set; } = "A sock.";
-    bool MaterialComponentConsumed { get; set; } = false;
-    string VerbalComponent { get; set; } = "Scream a little.";
-    string SomaticComponent { get; set; } = "Beat your chest.";
-    AreaOfEffect AreaOfEffect { get; set; } = AreaOfEffect.LINE;
-    Duration CastingTime { get; set; } = new Duration(1, "Action");
-    string Description { get; set; } = "Removes a person's name forever.";
+    bool Ritual { get; set; }
+    public string Name { get; private set; }
+    string School { get; set; }
+    string? MaterialComponent { get; set; }
+    bool MaterialComponentConsumed { get; set; }
+    string? VerbalComponent { get; set; }
+    string? SomaticComponent { get; set; }
+    AreaOfEffect AreaOfEffect { get; set; }
+    Duration CastingTime { get; set; }
+    string Description { get; set; }
+    Duration SpellDuration { get; set; }
 
     public Spell(
-        int range,
-        int level,
-        bool ritual, 
-        string name, 
-        string school,
-        string description, 
-        string higherLevel,
-        Duration castingTime, 
+        Duration castingTime,
+        Duration spellDuration,
         AreaOfEffect areaOfEffect, 
-        string verbalComponent,
-        string somaticComponent, 
-        string materialComponent,
-        bool materialComponentConsumed
+        int range=0,
+        int level=0,
+        bool ritual=false, 
+        string name="Unnamed", 
+        string school="Illusion",
+        string description="Removes a person's name forever.", 
+        string? higherLevel=null,
+        string? verbalComponent="Scream a little.",
+        string? somaticComponent="Beat your chest.", 
+        string? materialComponent="A sock.",
+        bool materialComponentConsumed=false
     ){
         this.Name = name; 
         this.Range = range;
@@ -40,45 +42,42 @@ public class Spell{
         this.Description = description; 
         this.CastingTime = castingTime; 
         this.AreaOfEffect = areaOfEffect; 
+        this.SpellDuration = spellDuration;
         this.VerbalComponent = verbalComponent;
         this.SomaticComponent = somaticComponent; 
         this.MaterialComponent = materialComponent;
         this.MaterialComponentConsumed = materialComponentConsumed; 
     }
 
-    public Tuple<List<SpellSlot>, bool, string> castSpell(List<SpellSlot> characterSlots, int desiredLevel){
+    public Tuple<List<SpellSlot>, string> castSpell(List<SpellSlot> characterSlots, int desiredLevel){
         if (this.Level == 0)
-            return Tuple.Create(characterSlots, true, "Cantrip spell. No slot used.");
-
-        SpellSlot? chosen;
-        List<SpellSlot> castable = characterSlots.Where((slot) => (slot.level >= this.Level && !slot.usedUp)).ToList();
+            return Tuple.Create(characterSlots, "Cantrip. No slot used.");
         
-        if (!castable.Any()){
-            return Tuple.Create(characterSlots, false, "No available slots can cast that spell.");
-        }
-             
-        // Find a slot of the desired level. If there is none, pick the first castable one
-        chosen = castable.Find((spell) => spell.level == desiredLevel);
-        chosen = chosen ?? castable.First();
-
-        // Use up the chosen slot. CONFIRM IF REFERENCE WILL AFFECT THE CHARACTER SLOTS LIST
-        chosen.usedUp = true;
+        int slotIndex = characterSlots.FindIndex((slot) => (
+            !slot.usedUp && 
+            slot.level == desiredLevel && 
+            desiredLevel >= this.Level
+        ));
         
-        string castingLevel = String.Format("The spell was cast at level {0}\n", chosen.level);
+        if (slotIndex == -1)
+            return Tuple.Create(characterSlots, "No available slots can cast that spell.");
 
-        return Tuple.Create(characterSlots, true, castingLevel + this.ToString());
+        characterSlots[slotIndex].usedUp = true;
+
+        string castingLevel = String.Format("The spell was cast at level {0}\n", desiredLevel);
+        return Tuple.Create(characterSlots, castingLevel + this.ToString());
     }
 
     public override string ToString()
     {
         return String.Format(
-            "Name: {0} / Casting Time As Ritual {1} / Range: {2} / Area Of Effect: {3} /\n" +
+            "Name: {0} / Casting Time: {1} / Range: {2} / Area Of Effect: {3} /\n" +
             "Description: {4} /\n" +
             "Verbal Component: {5} /\n Somatic Component: {6} /\n Material Component: {7} /\n" +
             "At A Higher Level: {8} \n" +
             "Can Be A Ritual: {9} / School: {10} / Original Level: {11} /",
             new object[] {this.Name, this.CastingTime, this.Range, this.AreaOfEffect, this.Description,
-            this.VerbalComponent, this.SomaticComponent, this.MaterialComponent,
+            this.VerbalComponent ?? "Not Required", this.SomaticComponent ?? "Not Required", this.MaterialComponent ?? "Not Required",
             this.HigherLevel ?? "None", this.Ritual, this.School, this.Level}
         );
     }
