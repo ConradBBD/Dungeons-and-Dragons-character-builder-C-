@@ -1,18 +1,18 @@
 namespace Dungeons_And_Dragons_Character_Manager_App.Models;
 
 public class Weapon : Item{
-    List<uint> DamageDice { get; set; } // The list of dice i.e 2d4 = {4, 4}
-    List<string> DamageTypes { get; set; }
-    bool Magic { get; set; }
-    bool Finnesse { get; set; }
-    uint Quality { get; set; }
-    bool Light { get; set; }
-    bool Heavy { get; set; }
-    bool Reach { get; set; }
-    uint RangeNear { get; set; }
-    uint RangeFar { get; set; }
-    bool Thrown { get; set; }
-    bool Versatile { get; set; }
+    public List<uint> DamageDice { get; set; } // The list of dice i.e 2d4 = {4, 4}
+    public List<string> DamageTypes { get; set; }
+    public bool Magic { get; set; }
+    public bool Finnesse { get; set; }
+    public uint Quality { get; set; }
+    public bool Light { get; set; }
+    public bool Heavy { get; set; }
+    public bool Reach { get; set; }
+    public uint RangeNear { get; set; }
+    public uint RangeFar { get; set; }
+    public bool Thrown { get; set; }
+    public bool Versatile { get; set; }
 
     public Weapon(
         List<string> damageTypes,
