@@ -14,10 +14,13 @@ namespace Dungeons_And_Dragons_Character_Manager_App.Data
         public DbSet<Race> Races { get; set; }
         public DbSet<AbilityScore> AbilityScores { get; set; }
         public DbSet<AbilityScoreIncrease> AbilityScoreIncreases { get; set; }
+
+        public DbSet<Fighter> Fighter { get; set; }
+
+
         // public DbSet<Background> Backgrounds { get; set; }
 
-        // public DbSet<Equipment> Equipment { get; set; }
+        // public DbSet<Item> Items { get; set; }
 
-        // public DbSet<EquipmentList> EquipmentList { get; set; }
     }
 }

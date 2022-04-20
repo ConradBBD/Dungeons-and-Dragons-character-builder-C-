@@ -7,10 +7,12 @@ namespace Dungeons_And_Dragons_Character_Manager_App.Data
 
         public static void Initialize(CharacterManagerContext context)
         {
+            /*
             if (context.Races.Any())
             {
                 return; //Db has already been initialized
             }
+            */
 
             var races = new Race[]
             {
@@ -19,6 +21,7 @@ namespace Dungeons_And_Dragons_Character_Manager_App.Data
             context.Races.AddRange(races);
             context.SaveChanges();
 
+            /*
             var abilities = new Ability[]
             {
                 new Ability{Name="Constitution", Description="" }
@@ -28,10 +31,11 @@ namespace Dungeons_And_Dragons_Character_Manager_App.Data
 
             var abilityScoreIncreases = new AbilityScoreIncrease[]
             {
-                new AbilityScoreIncrease{RaceID=1, AbilityID=1, Increase=2 }
+                new AbilityScoreIncrease{RaceID=5, AbilityID=2, Increase=2 }
             };
             context.AbilityScoreIncreases.AddRange(abilityScoreIncreases);
             context.SaveChanges();
+            */
         }
     }
 }
