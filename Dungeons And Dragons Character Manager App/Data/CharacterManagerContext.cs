@@ -17,10 +17,12 @@ namespace Dungeons_And_Dragons_Character_Manager_App.Data
 
         public DbSet<Fighter> Fighter { get; set; }
 
+        public DbSet<Spell> Spells { get; set; }
+
 
         // public DbSet<Background> Backgrounds { get; set; }
 
-        public DbSet<Item> Items { get; set; }
+        // public DbSet<Item> Items { get; set; }
 
     }
 }

@@ -1,4 +1,4 @@
-namespace Dungeons_And_Dragons_Character_Manager_App.DefaultData;
+namespace Dungeons_And_Dragons_Character_Manager_App.Inventory;
 
 using Dungeons_And_Dragons_Character_Manager_App.Models;
 
@@ -6,8 +6,9 @@ public static class SpellsInventory{
 
     private static List<Spell> ListOfSpells { get; set; } = new List<Spell>();
 
-    public static void Generate(){
+    public static List<Spell> Generate(){
         generateCantrips();
+        return ListOfSpells;
     }
 
     public static List<Spell> getAllSpells(){
