@@ -9,18 +9,16 @@ namespace Dungeons_And_Dragons_Character_Manager_App.Models
         public string SubClass {get; set;}
         public ICollection<string> SubclassFeatures {get; set;}
 
-        // protected ICollection<T> ItemProficiencies {get; set;}
-        public ICollection<string> WeaponProficiencies {get; set;}
-        public ICollection<string> ToolProficiencies {get; set;}
-        public ICollection<string> ArmourProficiencies {get; set;}
-        public ICollection<string> SkillProficiencies {get; set;}
-        public ICollection<string> SavingProficiencies {get; set;}
-        public ICollection<string> StartingEquipment {get; set;}
+        public ICollection<Item> ItemProficiencies {get; set;}
+        public ICollection<Skill> SkillProficiencies {get; set;}
+        public ICollection<Ability> SavingProficiencies {get; set;}
+        public ICollection<Item> StartingEquipment {get; set;}
         public List<int> AsiOnLevelUp {get; set;}
 
         public abstract void ShortRest();
         public abstract void LongRest();
         public abstract void LevelUp();
+
     }
 
     public class Fighter: DndClass
@@ -33,8 +31,6 @@ namespace Dungeons_And_Dragons_Character_Manager_App.Models
         public int ActionSurgeCount {get; set;}
         public int IndomnitableCharges {get; set;}
         public int IndomnitableTotal {get; set;}
-
-        // implementation of methods might need to be in a controller instead of model?
 
         public Fighter(
             int Level,
@@ -93,6 +89,7 @@ namespace Dungeons_And_Dragons_Character_Manager_App.Models
         }
 
         public override void LevelUp()
+
         {
             this.Level++;
             switch(this.Level)
@@ -171,14 +168,10 @@ namespace Dungeons_And_Dragons_Character_Manager_App.Models
             else
             {
                 Console.Write("Second Wind already used.\n");
-
             }
-            // else throw message/exception that it was already used
         }
 
     }
-
-    // Will do wizard once the spells are done
     
     public class Wizard: DndClass
     {
@@ -257,7 +250,6 @@ namespace Dungeons_And_Dragons_Character_Manager_App.Models
                 int count = 0;
                 while (HalfLevel > 0)
                 {
-
                     if ((!this.SpellSlots[count].usedUp) & (this.SpellSlots[count].level <= HalfLevel))
                     {
                         this.SpellSlots[count].resetSlot();
@@ -411,7 +403,5 @@ namespace Dungeons_And_Dragons_Character_Manager_App.Models
                 }
             }
         }
-
     }
-
 }

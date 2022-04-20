@@ -1,4 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Dungeons_And_Dragons_Character_Manager_App.Models
 {
@@ -125,6 +125,5 @@ namespace Dungeons_And_Dragons_Character_Manager_App.Models
 
             return weaponAttack;
         }
-        
     }
 }
