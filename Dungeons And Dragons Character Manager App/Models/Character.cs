@@ -19,7 +19,7 @@ namespace Dungeons_And_Dragons_Character_Manager_App.Models
         public int armourClass {get; set;} 
         //public ICollection<Skills> skills {get; set;} 
         //public ICollection<Item> itemProficiencies {get; set;} 
-        public ICollection<Skills> skillProficiencies {get; set;} 
+        public ICollection<Skill> skillProficiencies {get; set;} 
         public ICollection<Ability> savingProficiencies {get; set;} 
         public int experiencePoints {get; set;} 
         public int currentHitDice {get; set;} 
@@ -32,48 +32,41 @@ namespace Dungeons_And_Dragons_Character_Manager_App.Models
         public int numElectrum {get; set;}
 
 
-        public int AbilityCheck(string abilityName, int bonusOrPenalty=0,
-                                bool advantage=false, bool disadvantage=false,
-                                string skillName = "")
+        public int AbilityCheck(Ability ability)
         {
             Random random = new Random();
             int total;
             int rollResult = random.Next(1, 21);
 
-            if (advantage)
-            {
-                int secondRoll = random.Next(1, 21);
-                rollResult = Math.Max(rollResult, secondRoll);
-            }
-            if (disadvantage)
-            {
-                int secondRoll = random.Next(1, 21);
-                rollResult = Math.Min(secondRoll, rollResult);
-            }
-
-            AbilityScore abilityScore = abilityScores.First(score => score.Ability.Name == abilityName);            
-            int modifier = abilityScore.GetModifier();
+            AbilityScore abilityScore = abilityScores.First(score => score.Ability.Equals(ability));            
+            int modifier = abilityScore.Modifier;
             
-            total = modifier + rollResult + bonusOrPenalty;
+            total = modifier + rollResult;
+            return total;
+            
+        }
 
-            if (!skillName.Equals(""))
-            {
-                if (skillProficiencies.Any(proficiency => proficiency.Name == skillName))
-                    total += proficiencyBonus;
-            }
+        public int SkillCheck(Skill skill)
+        {
+            int total = AbilityCheck(skill.parentAbility);
+
+            if (skillProficiencies.Any(proficiency => proficiency.Equals(skill)))
+                total += proficiencyBonus;
 
             return total;
             
         }
 
-        public int SavingThrow(string abilityName, int bonusOrPenalty = 0, bool advantage = false, bool disadvantage = false)
+        public int SavingThrow(Ability ability)
         {
-            int total = AbilityCheck(abilityName, bonusOrPenalty:bonusOrPenalty, advantage:advantage, disadvantage:disadvantage);
+            int total = AbilityCheck(ability);
 
-            if (savingProficiencies.Any(proficiency => proficiency.Name == abilityName))
+            if (savingProficiencies.Any(proficiency => proficiency.Equals(ability)))
                 total += proficiencyBonus;
 
             return total;
         }
+
+        
     }
 }

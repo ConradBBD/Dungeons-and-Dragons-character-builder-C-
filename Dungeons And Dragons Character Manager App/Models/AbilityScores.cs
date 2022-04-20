@@ -9,9 +9,11 @@
         public Ability Ability { get; set; }
         public int Score { get; set; }
 
-        public int GetModifier() 
-        { 
-            return (Score - 10)/2; 
+        public int Modifier { get; set; }
+
+        public void SetModifier()
+        {
+            Modifier = (Score - 10)/2; 
         }
 
 
