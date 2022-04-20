@@ -20,7 +20,7 @@ namespace Dungeons_And_Dragons_Character_Manager_App.Data
 
         // public DbSet<Background> Backgrounds { get; set; }
 
-        // public DbSet<Item> Items { get; set; }
+        public DbSet<Item> Items { get; set; }
 
     }
 }
