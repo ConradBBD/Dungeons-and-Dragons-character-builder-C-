@@ -1,0 +1,67 @@
+﻿@model IEnumerable<Dungeons_And_Dragons_Character_Manager_App.Models.Race>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<form method="post">
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.MaturityAge)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Lifespan)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Alignment)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Size)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Speed)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+    @foreach (var item in Model) {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MaturityAge)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Lifespan)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Alignment)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Size)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Speed)
+                </td>
+                <td>
+                    <input type="radio" value="@item.ID" />@item.Name<br />
+                </td>
+            </tr>
+    }
+        </tbody>
+    </table>
+    <input type="submit"/>
+</form>
