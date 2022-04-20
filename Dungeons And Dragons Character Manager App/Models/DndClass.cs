@@ -16,10 +16,11 @@ namespace Dungeons_And_Dragons_Character_Manager_App.Models
         protected ICollection<string> SkillProficiencies {get; set;}
         protected ICollection<string> SavingProficiencies {get; set;}
         protected ICollection<string> StartingEquipment {get; set;}
+        protected List<int> AsiOnLevelUp {get; set;}
 
         public abstract void ShortRest();
         public abstract void LongRest();
-        public abstract void LevelUp();
+        public abstract void LevelUp(string AbilityToIncrease = "");
     }
 
     public class Fighter: DndClass
@@ -69,6 +70,14 @@ namespace Dungeons_And_Dragons_Character_Manager_App.Models
             this.AttackCount = AttackCount;
             this.IndomnitableCharges = IndomnitableCharges;
             this.IndomnitableTotal = 0;
+            this.AsiOnLevelUp = new List<int>();
+            this.AsiOnLevelUp.Add(4);
+            this.AsiOnLevelUp.Add(6);
+            this.AsiOnLevelUp.Add(8);
+            this.AsiOnLevelUp.Add(12);
+            this.AsiOnLevelUp.Add(14);
+            this.AsiOnLevelUp.Add(16);
+            this.AsiOnLevelUp.Add(19);
         }
 
         public override void ShortRest()
@@ -83,7 +92,7 @@ namespace Dungeons_And_Dragons_Character_Manager_App.Models
             this.IndomnitableCharges = 0;
         }
 
-        public override void LevelUp()
+        public override void LevelUp(string AbilityToIncrease = "")
         {
             this.Level++;
             switch(this.Level)
@@ -101,7 +110,6 @@ namespace Dungeons_And_Dragons_Character_Manager_App.Models
                 }
                 case 4:
                 {
-                    // this.abilityScoreImprovement();
                     break;
                 }
                 case 5:
@@ -111,7 +119,6 @@ namespace Dungeons_And_Dragons_Character_Manager_App.Models
                 }
                 case 6:
                 {
-                    // this.abilityScoreImprovement();
                     break;
                 }
                 case 7:
@@ -121,7 +128,6 @@ namespace Dungeons_And_Dragons_Character_Manager_App.Models
                 }
                 case 8:
                 {
-                    // this.abilityScoreImprovement();
                     break;
                 }
                 case 9:
@@ -141,7 +147,6 @@ namespace Dungeons_And_Dragons_Character_Manager_App.Models
                 }
                 case 12:
                 {
-                    // this.abilityScoreImprovement();
                     break;
                 }
                 case 13:
@@ -151,7 +156,6 @@ namespace Dungeons_And_Dragons_Character_Manager_App.Models
                 }
                 case 14:
                 {
-                    // this.abilityScoreImprovement();
                     break;
                 }
                 case 15:
@@ -161,7 +165,6 @@ namespace Dungeons_And_Dragons_Character_Manager_App.Models
                 }
                 case 16:
                 {
-                    // this.abilityScoreImprovement();
                     break;
                 }
                 case 17:
@@ -177,7 +180,6 @@ namespace Dungeons_And_Dragons_Character_Manager_App.Models
                 }
                 case 19:
                 {
-                    // this.abilityScoreImprovement();
                     break;
                 }
                 case 20:
@@ -256,9 +258,15 @@ namespace Dungeons_And_Dragons_Character_Manager_App.Models
             this.SpellAttack = SpellAttack;
             this.RitualCasting = "You can cast a wizard spell as a ritual if that spell has the ritual tag and you have the spell in your spellbook. You don't need to have the spell prepared.";
             this.SpellCastingFocus = SpellCastingFocus;
-            this.ArcaneRecoveryTotal = ArcaneRecoveryTotal;
+            this.ArcaneRecoveryTotal = (this.Level/2) + (this.Level % 2);
             this.SpellMastery = SpellMastery;
             this.SignatureSpells = SignatureSpells;
+            this.AsiOnLevelUp = new List<int>();
+            this.AsiOnLevelUp.Add(4);
+            this.AsiOnLevelUp.Add(8);
+            this.AsiOnLevelUp.Add(12);
+            this.AsiOnLevelUp.Add(16);
+            this.AsiOnLevelUp.Add(19);
         }
 
         public void ResetSpellSlots()
@@ -269,22 +277,53 @@ namespace Dungeons_And_Dragons_Character_Manager_App.Models
             }
         }
 
-        // public bool ArcaneRecovery()
-        // {
-        //     if (!ArcaneRecoveryUsed)
-        //     {
-                
-        //     }
-        //     else 
-        //     {
-        //         Console.Write("Arcane Recovery already used.");
-        //     }
-        //     return true;
-        // }
+        public bool ArcaneRecoveryHigh()
+        {
+            if (!ArcaneRecoveryUsed)
+            {
+                int HalfLevel = (this.Level/2) + (this.Level % 2);
+                int count = this.SpellSlots.Count;
+                while (HalfLevel > 0)
+                {
+                    if ((!this.SpellSlots[count].usedUp) & (this.SpellSlots[count].level <= HalfLevel))
+                    {
+                        this.SpellSlots.resetSlot();
+                    }
+                    count--;
+                }
+            }
+            else 
+            {
+                Console.Write("Arcane Recovery already used.");
+            }
+            return true;
+        }
+
+        public bool ArcaneRecoveryLow()
+        {
+            if (!ArcaneRecoveryUsed)
+            {
+                int HalfLevel = (this.Level/2) + (this.Level % 2);
+                int count = 0;
+                while (HalfLevel > 0)
+                {
+                    if ((!this.SpellSlots[count].usedUp) & (this.SpellSlots[count].level <= HalfLevel))
+                    {
+                        this.SpellSlots.resetSlot();
+                    }
+                    count++;
+                }
+            }
+            else 
+            {
+                Console.Write("Arcane Recovery already used.");
+            }
+            return true;
+        }
 
         public override void ShortRest()
         {
-            // this.ArcaneRecoveryUsed = this.ArcaneRecovery();
+            this.ArcaneRecoveryUsed = this.ArcaneRecoveryLow();
         }
 
         public override void LongRest()
@@ -293,13 +332,14 @@ namespace Dungeons_And_Dragons_Character_Manager_App.Models
             this.ResetSpellSlots();
         }
 
-        public override void LevelUp()
+        public override void LevelUp(string AbilityToIncrease = "")
         {
             this.Level++;
             switch(this.Level)
             {
                 case 2:
                 {
+                    this.ArcaneRecoveryTotal = (this.Level/2) + (this.Level % 2);
                     this.SpellSlots.Add(new SpellSlot(1));
                     this.SubClass = "School of Evocation";
                     this.SubclassFeatures.Add("Evocation Savant");
@@ -308,6 +348,7 @@ namespace Dungeons_And_Dragons_Character_Manager_App.Models
                 }
                 case 3:
                 {
+                    this.ArcaneRecoveryTotal = (this.Level/2) + (this.Level % 2);
                     this.SpellSlots.Add(new SpellSlot(1));
                     this.SpellSlots.Add(new SpellSlot(2));
                     this.SpellSlots.Add(new SpellSlot(2));
@@ -315,93 +356,105 @@ namespace Dungeons_And_Dragons_Character_Manager_App.Models
                 }
                 case 4:
                 {
+                    this.ArcaneRecoveryTotal = (this.Level/2) + (this.Level % 2);
                     this.SpellSlots.Add(new SpellSlot(2));
-                    // this.abilityScoreImprovement();
                     break;
                 }
                 case 5:
                 {
+                    this.ArcaneRecoveryTotal = (this.Level/2) + (this.Level % 2);
                     this.SpellSlots.Add(new SpellSlot(3));
                     this.SpellSlots.Add(new SpellSlot(3));
                     break;
                 }
                 case 6:
                 {
+                    this.ArcaneRecoveryTotal = (this.Level/2) + (this.Level % 2);
                     this.SpellSlots.Add(new SpellSlot(3));
                     this.SubclassFeatures.Add("Potent Cantrip");
                     break;
                 }
                 case 7:
                 {
+                    this.ArcaneRecoveryTotal = (this.Level/2) + (this.Level % 2);
                     this.SpellSlots.Add(new SpellSlot(4));
                     break;
                 }
                 case 8:
                 {
+                    this.ArcaneRecoveryTotal = (this.Level/2) + (this.Level % 2);
                     this.SpellSlots.Add(new SpellSlot(4));
-                    // this.abilityScoreImprovement();
                     break;
                 }
                 case 9:
                 {
+                    this.ArcaneRecoveryTotal = (this.Level/2) + (this.Level % 2);
                     this.SpellSlots.Add(new SpellSlot(4));
                     this.SpellSlots.Add(new SpellSlot(5));
                     break;
                 }
                 case 10:
                 {
+                    this.ArcaneRecoveryTotal = (this.Level/2) + (this.Level % 2);
                     this.SpellSlots.Add(new SpellSlot(5));
                     this.SubclassFeatures.Add("Empowered Evocation");
                     break;
                 }
                 case 11:
                 {
+                    this.ArcaneRecoveryTotal = (this.Level/2) + (this.Level % 2);
                     this.SpellSlots.Add(new SpellSlot(6));
                     break;
                 }
                 case 12:
                 {
-                    // this.abilityScoreImprovement();
+                    this.ArcaneRecoveryTotal = (this.Level/2) + (this.Level % 2);
                     break;
                 }
                 case 13:
                 {
+                    this.ArcaneRecoveryTotal = (this.Level/2) + (this.Level % 2);
                     this.SpellSlots.Add(new SpellSlot(7));
                     break;
                 }
                 case 14:
                 {
+                    this.ArcaneRecoveryTotal = (this.Level/2) + (this.Level % 2);
                     this.SubclassFeatures.Add("Overchannel");
                     break;
                 }
                 case 15:
                 {
+                    this.ArcaneRecoveryTotal = (this.Level/2) + (this.Level % 2);
                     this.SpellSlots.Add(new SpellSlot(8));
                     break;
                 }
                 case 16:
                 {
-                    // this.abilityScoreImprovement();
+                    this.ArcaneRecoveryTotal = (this.Level/2) + (this.Level % 2);
                     break;
                 }
                 case 17:
                 {
+                    this.ArcaneRecoveryTotal = (this.Level/2) + (this.Level % 2);
                     this.SpellSlots.Add(new SpellSlot(9));
                     break;
                 }
                 case 18:
                 {
+                    this.ArcaneRecoveryTotal = (this.Level/2) + (this.Level % 2);
                     this.SpellSlots.Add(new SpellSlot(5));
                     break;
                 }
                 case 19:
                 {
+                    this.ArcaneRecoveryTotal = (this.Level/2) + (this.Level % 2);
                     this.SpellSlots.Add(new SpellSlot(6));
-                    // this.abilityScoreImprovement();
                     break;
                 }
                 case 20:
                 {
+                    this.ArcaneRecoveryTotal = (this.Level/2) + (this.Level % 2);
                     this.SpellSlots.Add(new SpellSlot(7));
                     break;
                 }
