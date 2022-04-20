@@ -15,7 +15,7 @@ public class Background {
     private string eyes {get; set;}
     private string skin {get; set;}
     private string hair {get; set;}
-    private string characterBackstry {get; set;}
+    private string characterBackstory {get; set;}
 
     public Background(
         string newPersonalityTraits,
@@ -30,6 +30,7 @@ public class Background {
         string newPlayerName,
         int newAge,
         int newHeight,
+        int newWeight,
         string newEyes,
         string newSkin,
         string newHair,
@@ -48,6 +49,7 @@ public class Background {
         playerName = newPlayerName;
         age = newAge;
         height = newHeight;
+        weight = newWeight;
         eyes = newEyes;
         skin = newSkin;
         hair = newHair;
