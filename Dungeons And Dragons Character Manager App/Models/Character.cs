@@ -17,9 +17,11 @@ namespace Dungeons_And_Dragons_Character_Manager_App.Models
         public List<Item>? Equipment { get; set; }
         public int proficiencyBonus { get; set; }
         public int armourClass { get; set; }
+        [ForeignKey("Skill")]
         public List<Skill>? Skills { get; set; }
         [NotMapped]
         public List<Item>? ItemProficiencies { get; set; }
+        [ForeignKey("SkillProf")]
         public List<Skill>? SkillProficiencies { get; set; }
         public List<Ability>? SavingProficiencies { get; set; }
         public int currentHitDice { get; set; }

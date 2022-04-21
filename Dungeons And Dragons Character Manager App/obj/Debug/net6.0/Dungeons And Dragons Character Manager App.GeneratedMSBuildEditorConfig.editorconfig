@@ -8,41 +8,9 @@ build_property.PlatformNeutralAssembly =
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = Dungeons_And_Dragons_Character_Manager_App
 build_property.RootNamespace = Dungeons_And_Dragons_Character_Manager_App
-build_property.ProjectDir = C:\GradProjects\Dungeons-and-Dragons-character-builder-C-\Dungeons And Dragons Character Manager App\
+build_property.ProjectDir = C:\Users\bbdnet2585\Documents\DnD-Character-Project\Dungeons And Dragons Character Manager App\
 build_property.RazorLangVersion = 6.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = C:\GradProjects\Dungeons-and-Dragons-character-builder-C-\Dungeons And Dragons Character Manager App
+build_property.MSBuildProjectDirectory = C:\Users\bbdnet2585\Documents\DnD-Character-Project\Dungeons And Dragons Character Manager App
 build_property._RazorSourceGeneratorDebug = 
-
-[C:/GradProjects/Dungeons-and-Dragons-character-builder-C-/Dungeons And Dragons Character Manager App/Views/Characters/Create.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2hhcmFjdGVyc1xDcmVhdGUuY3NodG1s
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/GradProjects/Dungeons-and-Dragons-character-builder-C-/Dungeons And Dragons Character Manager App/Views/Characters/Delete.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2hhcmFjdGVyc1xEZWxldGUuY3NodG1s
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/GradProjects/Dungeons-and-Dragons-character-builder-C-/Dungeons And Dragons Character Manager App/Views/Characters/Details.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2hhcmFjdGVyc1xEZXRhaWxzLmNzaHRtbA==
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/GradProjects/Dungeons-and-Dragons-character-builder-C-/Dungeons And Dragons Character Manager App/Views/Characters/Edit.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2hhcmFjdGVyc1xFZGl0LmNzaHRtbA==
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/GradProjects/Dungeons-and-Dragons-character-builder-C-/Dungeons And Dragons Character Manager App/Views/Characters/Index.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2hhcmFjdGVyc1xJbmRleC5jc2h0bWw=
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/GradProjects/Dungeons-and-Dragons-character-builder-C-/Dungeons And Dragons Character Manager App/Views/Races/Details.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmFjZXNcRGV0YWlscy5jc2h0bWw=
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/GradProjects/Dungeons-and-Dragons-character-builder-C-/Dungeons And Dragons Character Manager App/Views/Races/Index.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmFjZXNcSW5kZXguY3NodG1s
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/GradProjects/Dungeons-and-Dragons-character-builder-C-/Dungeons And Dragons Character Manager App/Views/Shared/_ValidationScriptsPartial.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
-build_metadata.AdditionalFiles.CssScope = 

@@ -92,7 +92,7 @@
         </dd>
     </dl>
 
-    @*<dl class="row">
+    <dl class="row">
         @foreach (var item in Model.AbilityScores)
         {
             <dt class = "col-sm-2">
@@ -102,7 +102,7 @@
                 @Html.DisplayFor(modelItem => item.Modifier)
             </dd>
         }
-    </dl>*@
+    </dl>
 </div>
 <div>
     <a asp-action="Edit" asp-route-id="@Model?.ID">Edit</a> |
