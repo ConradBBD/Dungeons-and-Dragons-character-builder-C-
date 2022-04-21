@@ -1,15 +1,17 @@
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace Dungeons_And_Dragons_Character_Manager_App.Models;
 
 public class Tool : Item{
-    public uint Count { get; set; }
-
+    public int Count { get; set; }
+    [NotMapped]
     public AbilityScore AbilityScore { get; set; }
 
     public Tool(
         AbilityScore ability,
-        uint cost = 5,
-        uint count = 20,
-        uint weight = 5,
+        int cost = 5,
+        int count = 20,
+        int weight = 5,
         string name = "Arrow"
     ){
         this.Name = name;

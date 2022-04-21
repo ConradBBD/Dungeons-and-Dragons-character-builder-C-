@@ -2,20 +2,20 @@ namespace Dungeons_And_Dragons_Character_Manager_App.Models;
 
 public class Spell{
     public int Id { get; set; }
-    int Range { get; set; }
-    int Level { get; set; }
-    string? HigherLevel { get; set; }
-    bool Ritual { get; set; }
+    public int Range { get; set; }
+    public int Level { get; set; }
+    public string? HigherLevel { get; set; }
+    public bool Ritual { get; set; }
     public string Name { get; private set; }
-    string School { get; set; }
-    string? MaterialComponent { get; set; }
-    bool MaterialComponentConsumed { get; set; }
-    string? VerbalComponent { get; set; }
-    string? SomaticComponent { get; set; }
-    AreaOfEffect AreaOfEffect { get; set; }
-    Duration CastingTime { get; set; }
-    string Description { get; set; }
-    Duration SpellDuration { get; set; }
+    public string School { get; set; }
+    public string? MaterialComponent { get; set; }
+    public bool MaterialComponentConsumed { get; set; }
+    public string? VerbalComponent { get; set; }
+    public string? SomaticComponent { get; set; }
+    public AreaOfEffect AreaOfEffect { get; set; }
+    public Duration CastingTime { get; set; }
+    public string Description { get; set; }
+    public Duration SpellDuration { get; set; }
 
     public Spell(
         Duration castingTime,

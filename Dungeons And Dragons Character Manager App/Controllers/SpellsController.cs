@@ -2,16 +2,11 @@ namespace Dungeons_And_Dragons_Character_Manager_App.Controllers;
 
 using System;
 
-
-// using System.Collections.Generic;
-// using System.Linq;
-// using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-// using Microsoft.AspNetCore.Mvc.Rendering;
-// using Microsoft.EntityFrameworkCore;
 using Dungeons_And_Dragons_Character_Manager_App.Data;
 using Dungeons_And_Dragons_Character_Manager_App.Models;
 using Dungeons_And_Dragons_Character_Manager_App.Inventory;
+using System.Text.Json;
 
 public class SpellsController : Controller {
 
@@ -20,8 +15,10 @@ public class SpellsController : Controller {
     public SpellsController(CharacterManagerContext cont){
         _context = cont;
 
-        SpellsInventory.Generate().ForEach((defaultData) => _context.Spells.Add(defaultData));
-        _context.SaveChanges();
+        if (_context.Spells.ToList().Count == 0) {
+            SpellsInventory.Generate().ForEach((defaultData) => _context.Spells.Add(defaultData));
+            _context.SaveChanges();
+        }
     }
 
     [HttpGet]
@@ -33,27 +30,29 @@ public class SpellsController : Controller {
         return details;
     }
 
-    [HttpGet]
-    public IActionResult Detail([FromBody] string name){
+    [HttpPost]
+    public IActionResult DetailOne([FromBody] JsonElement data){
+        string name = data.GetProperty("name").ToString();
         Spell? theSpell = _context.Spells.ToList().Find(
             (spell) => spell.Name == name
         );
-        
+
         if (theSpell == null)
-            return NotFound();
+            return NotFound("Spell " + name + " not found");
         return new ObjectResult(theSpell.ToString());
     }
 
-    [HttpPost]
-    public IEnumerable<Spell> AssignSpells([FromBody] List<string> spells){
-        List<Spell> selected = new List<Spell>();
-        Character hero = _context.Characters.First();
-
-        if (hero.CharacterClass?.GetType() == typeof(Wizard)){
-            selected = SpellsInventory.getSpecifiedSpells(spells);
-            ((Wizard) hero.CharacterClass).SpellList = selected;
-        }
-        return selected;
-    }
+   // [HttpPost]
+   // public IEnumerable<Spell> AssignSpells([FromBody] List<string> spells){
+   //     List<Spell> selected = new List<Spell>();
+   //     Character hero = _context.Characters.First();
+    //
+ //      if (hero.CharacterClass?.GetType() == typeof(Wizard)){
+    //        selected = SpellsInventory.getSpecifiedSpells(spells);
+      //      ((Wizard) hero.CharacterClass).SpellList = selected;
+      //      _context.SaveChanges();
+      //  }
+      //  return selected;
+   // }
 }
 

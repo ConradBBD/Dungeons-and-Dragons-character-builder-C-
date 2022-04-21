@@ -93,6 +93,41 @@ namespace Dungeons_And_Dragons_Character_Manager_App.Controllers
             return View(character);
         }
 
+        // POST: Characters/AddClass/
+        public async Task<IActionResult> AddClass(int id, [FromBody] string classname)
+        {
+            var character = await _context.Characters.FindAsync(id);
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    if (classname.Equals("Fighter"))
+                    {
+                        character.CharacterClass = new Fighter();
+                    }
+                    else if (classname.Equals("Wizard"))
+                    {
+                        character.CharacterClass = new Wizard();
+                    }
+                    _context.Update(character);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!CharacterExists(character.ID))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction(nameof(Index));
+            }
+            return CreatedAtAction(nameof(Index), new { id = character.ID }, character);
+        }
+
         // POST: Characters/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.

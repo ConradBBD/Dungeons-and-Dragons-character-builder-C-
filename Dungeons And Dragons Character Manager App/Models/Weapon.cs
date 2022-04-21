@@ -4,34 +4,34 @@ namespace Dungeons_And_Dragons_Character_Manager_App.Models;
 
 public class Weapon : Item{
     [NotMapped]
-    public List<uint> DamageDice { get; set; } // The list of dice i.e 2d4 = {4, 4}
+    public List<int> DamageDice { get; set; } // The list of dice i.e 2d4 = {4, 4}
     [NotMapped]
     public List<string> DamageTypes { get; set; }
     public bool Magic { get; set; }
     public bool Finnesse { get; set; }
-    public uint Quality { get; set; }
+    public int Quality { get; set; }
     public bool Light { get; set; }
     public bool Heavy { get; set; }
     public bool Reach { get; set; }
-    public uint RangeNear { get; set; }
-    public uint RangeFar { get; set; }
+    public int RangeNear { get; set; }
+    public int RangeFar { get; set; }
     public bool Thrown { get; set; }
     public bool Versatile { get; set; }
 
     public Weapon(
         List<string> damageTypes,
-        List<uint> damageDice,
-        uint quality = 3,
-        uint rangeNear = 5,
-        uint rangeFar = 10,
-        uint lbWeight = 50,
+        List<int> damageDice,
+        int quality = 3,
+        int rangeNear = 5,
+        int rangeFar = 10,
+        int lbWeight = 50,
         bool light = true,
         bool magic = false,
         bool heavy = false,
         bool reach = false,
         bool thrown = false,
         bool finnesse = false,
-        uint gpCost = 1000000,
+        int gpCost = 1000000,
         string name = "Mehaxe"
     ){
         this.Name = name;
@@ -60,7 +60,7 @@ public class Weapon : Item{
             "Weight: {4}lbs /\n Cost: {5}gp /\n Magic Weapon: {6} /\n" +
             "Range (Near-Far): {7}-{8} / Damage Dice: {9} \n" +
             "Thrown: {10} / Finnesse: {11} /",
-            new object[] { this.Name, string.Join(',', this.DamageTypes), this.Quality, 
+            new object[] { this.Name, string.Join(',', this.DamageTypes ), this.Quality, 
             this.decideWeaponType(), this.LbWeight, this.GPCost, this.Magic, this.RangeNear,
             this.RangeFar, this.DamageDice, this.Thrown, this.Finnesse }
         );
