@@ -5,5 +5,4 @@ public abstract class Item{
     public string Name { get; set; }
     public uint LbWeight { get; set; }
     public uint GPCost { get; set; }
-
 }
