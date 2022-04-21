@@ -44,6 +44,17 @@ namespace Dungeons_And_Dragons_Character_Manager_App.Controllers
             return View(character);
         }
 
+        // POST: Characters/CreateJSON
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult<Character>> CreateJSON([Bind("ID,name,currentHitPoints,temporaryHitPoints,maxHitPoints,proficiencyBonus,armourClass,currentHitDice,totalHitDice,numGold,numSilver,numCopper,numPlatinum,numElectrum")] Character character)
+        {
+            _context.Add(character);
+            await _context.SaveChangesAsync();
+
+            return CreatedAtAction(nameof(Index), new { id = character.ID }, character);
+        }
+
         // GET: Characters/Create
         public IActionResult Create()
         {
@@ -55,7 +66,7 @@ namespace Dungeons_And_Dragons_Character_Manager_App.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,name,playerName,currentHitPoints,temporaryHitPoints,maxHitPoints,proficiencyBonus,armourClass,experiencePoints,currentHitDice,totalHitDice,numGold,numSilver,numCopper,numPlatinum,numElectrum")] Character character)
+        public async Task<IActionResult> Create([Bind("ID,name,currentHitPoints,temporaryHitPoints,maxHitPoints,proficiencyBonus,armourClass,currentHitDice,totalHitDice,numGold,numSilver,numCopper,numPlatinum,numElectrum")] Character character)
         {
             if (ModelState.IsValid)
             {
