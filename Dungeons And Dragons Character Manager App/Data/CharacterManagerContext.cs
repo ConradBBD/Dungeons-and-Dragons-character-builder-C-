@@ -29,7 +29,7 @@ namespace Dungeons_And_Dragons_Character_Manager_App.Data
         {
             builder.Entity<Weapon>();
             builder.Entity<Tool>();
-            //builder.Entity<Armor>();
+            builder.Entity<Armor>();
             builder.Entity<Shield>();
 
             base.OnModelCreating(builder);
