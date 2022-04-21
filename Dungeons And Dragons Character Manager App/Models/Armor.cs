@@ -3,9 +3,9 @@ namespace Dungeons_And_Dragons_Character_Manager_App.Models;
 public class Armor : Item{
     public int? Strength { get; set; }
     public uint ArmorClass { get; set; }
-    public Duration DonTime { get; set; }
-    public Duration DoffTime { get; set; }
-    public ArmorType ArmorType { get; set; }
+    public Duration? DonTime { get; set; }
+    public Duration? DoffTime { get; set; }
+    public ArmorType? ArmorType { get; set; }
 
     public Armor(
         ArmorType type,        
@@ -27,6 +27,8 @@ public class Armor : Item{
         this.DoffTime = doff;
         this.Strength = strength;
     }
+
+    public Armor() { }
 
     public override string ToString(){
         return String.Format(

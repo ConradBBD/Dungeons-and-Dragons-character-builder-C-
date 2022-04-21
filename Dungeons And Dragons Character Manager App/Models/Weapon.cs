@@ -1,7 +1,11 @@
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace Dungeons_And_Dragons_Character_Manager_App.Models;
 
 public class Weapon : Item{
+    [NotMapped]
     public List<uint> DamageDice { get; set; } // The list of dice i.e 2d4 = {4, 4}
+    [NotMapped]
     public List<string> DamageTypes { get; set; }
     public bool Magic { get; set; }
     public bool Finnesse { get; set; }
@@ -47,6 +51,8 @@ public class Weapon : Item{
 
         this.Versatile = this.Heavy && this.Light;
     }
+
+    public Weapon() { }
 
     public override string ToString(){
         return String.Format(

@@ -30,6 +30,8 @@ public class Shield : Item{
         this.Quality = quality;
     }
 
+    public Shield() { }
+
     public override string ToString(){
         return String.Format(
             "Name: {0} / Cost: {1}gp / AC: +2 / \n" +

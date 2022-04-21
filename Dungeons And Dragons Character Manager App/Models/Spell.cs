@@ -1,7 +1,7 @@
 namespace Dungeons_And_Dragons_Character_Manager_App.Models;
 
 public class Spell{
-    public int Id { get; }
+    public int Id { get; set; }
     int Range { get; set; }
     int Level { get; set; }
     string? HigherLevel { get; set; }
@@ -48,6 +48,8 @@ public class Spell{
         this.MaterialComponent = materialComponent;
         this.MaterialComponentConsumed = materialComponentConsumed; 
     }
+
+    public Spell() { }
 
     public Tuple<List<SpellSlot>, string> castSpell(List<SpellSlot> characterSlots, int desiredLevel){
         if (this.Level == 0)

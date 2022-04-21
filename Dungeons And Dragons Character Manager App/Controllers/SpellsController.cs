@@ -1,6 +1,8 @@
 namespace Dungeons_And_Dragons_Character_Manager_App.Controllers;
 
 using System;
+
+
 // using System.Collections.Generic;
 // using System.Linq;
 // using System.Threading.Tasks;
@@ -26,3 +28,4 @@ public class SpellsController : Controller {
         return _context.Spells.ToList();
     }
 }
+
