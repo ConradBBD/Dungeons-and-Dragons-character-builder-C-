@@ -1,9 +1,14 @@
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace Dungeons_And_Dragons_Character_Manager_App.Models;
 
+[NotMapped]
 public class Duration{
-    public int Id { get; }
-    string DurationType { get; set; } = "ACTION";
-    int Magnitude { get; set; } = 1;
+    public int Id { get; set; }
+    public string DurationType { get; set; }
+    public int Magnitude { get; set; }
+
+    public Duration() { }
 
     public Duration(int magnitude, string type){
         if (this.setDurationType(type))

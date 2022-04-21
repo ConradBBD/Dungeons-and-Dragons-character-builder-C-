@@ -24,8 +24,36 @@ public class SpellsController : Controller {
         _context.SaveChanges();
     }
 
-    public IEnumerable<Spell> SpellList(){
-        return _context.Spells.ToList();
+    [HttpGet]
+    public IEnumerable<string> DetailAll(){
+        List<string> details = new List<string>();
+    
+        foreach(Spell x in _context.Spells.ToList())
+            details.Add(x.ToString());
+        return details;
+    }
+
+    [HttpGet]
+    public IActionResult Detail([FromBody] string name){
+        Spell? theSpell = _context.Spells.ToList().Find(
+            (spell) => spell.Name == name
+        );
+        
+        if (theSpell == null)
+            return NotFound();
+        return new ObjectResult(theSpell.ToString());
+    }
+
+    [HttpPost]
+    public IEnumerable<Spell> AssignSpells([FromBody] List<string> spells){
+        List<Spell> selected = new List<Spell>();
+        Character hero = _context.Characters.First();
+
+        if (hero.CharacterClass?.GetType() == typeof(Wizard)){
+            selected = SpellsInventory.getSpecifiedSpells(spells);
+            ((Wizard) hero.CharacterClass).SpellList = selected;
+        }
+        return selected;
     }
 }
 
